@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <style>
+            body, html {
+                height: 100%;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                overflow: hidden;
+            }
+
+            #message {
+                white-space: nowrap;
+                transition: font-size 0.5s ease; /* Smooth transition for font size changes */
+            }
+        </style>
+    </head>
+
+    <body>
+        <span id="message"></span>
+        <script>
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const message = urlParams.get('message');
+            const messageElement = document.getElementById('message');
+            messageElement.textContent = message;
+        
+            adjustFontSizeToFit(messageElement);
+        
+            function adjustFontSizeToFit(element) {
+                const maxWidth = window.innerWidth;
+                let fontSize = 100; // Start with a large font size
+                element.style.fontSize = fontSize + 'px';
+        
+                while (element.offsetWidth > maxWidth && fontSize > 0) {
+                    fontSize--;
+                    element.style.fontSize = fontSize + 'px';
+                }
+            }
+        
+            // Optional: Adjust font size on window resize
+            window.addEventListener('resize', () => {
+                adjustFontSizeToFit(messageElement);
+            });
+        </script>
+    </body>
+</html>
